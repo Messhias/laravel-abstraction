@@ -1,0 +1,14 @@
+parameters:
+
+    # The level 9 is the highest level
+    level: 9
+
+    ignoreErrors:
+#        - '#PHPDoc tag @var#'
+
+    excludePaths:
+        - ./vendor
+        - ./src/Interfaces
+
+    checkMissingIterableValueType: false
+    treatPhpDocTypesAsCertain: false
