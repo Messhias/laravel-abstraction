@@ -19,7 +19,7 @@ use Messhias\LaravelAbstraction\Interfaces\ResourceAPIController as RepositoryAp
 use Messhias\LaravelAbstraction\Traits\ResourceAPI;
 
 /**
- * App\Models\Beneficiary
+ * Messhias\LaravelAbstraction\Controllers\ResourceAPIController
  *
  * @property RepositoryApiEloquent $repository
  * @mixin Controller
