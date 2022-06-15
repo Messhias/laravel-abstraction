@@ -7,15 +7,23 @@
 
 namespace Messhias\LaravelAbstraction\Controllers;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Response;
 use Messhias\LaravelAbstraction\Repositories\RepositoryApiEloquent;
 use Messhias\LaravelAbstraction\Traits\GenericLogErrors;
 use Messhias\LaravelAbstraction\Interfaces\ResourceAPIController as RepositoryApiEloquentInterface;
 use Messhias\LaravelAbstraction\Traits\ResourceAPI;
 
+/**
+ * App\Models\Beneficiary
+ *
+ * @property RepositoryApiEloquent $repository
+ * @mixin Controller
+ */
 abstract class ResourceAPIController extends Controller implements RepositoryApiEloquentInterface
 {
 	use GenericLogErrors;
@@ -377,13 +385,13 @@ abstract class ResourceAPIController extends Controller implements RepositoryApi
 	 */
 	public function defaultNotLoggedResponse(): JsonResponse
 	{
-		return response()->json([
+		return Response::json([
 			"data" => false,
 			"message" => "Only logged in users can fetch this content.",
 			"code" => 401,
 			"success" => false,
 			"error" => true,
-			"completed_at" => now()->format("Y-m-d H:m:s"),
+			"completed_at" => Carbon::now()->format("Y-m-d H:m:s"),
 		], 401);
 	}
 }

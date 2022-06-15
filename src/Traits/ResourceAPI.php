@@ -29,7 +29,8 @@ trait ResourceAPI
 		ResourceAPIController $controller,
 		mixed                 $data,
 		int|bool              $customErrorResponse = false
-	): JsonResponse {
+	): JsonResponse
+	{
 		$responseCode = $controller->getRepository()::getResponseCode();
 		
 		if (is_int($customErrorResponse)) {
