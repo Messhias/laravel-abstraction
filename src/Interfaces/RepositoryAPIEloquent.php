@@ -10,60 +10,81 @@ declare(strict_types=1);
 
 namespace Messhias\LaravelAbstraction\Interfaces;
 
-use Illuminate\Http\Request;
+use Closure;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
 
 interface RepositoryAPIEloquent
 {
-	/**
-	 * Find an entry in the model.
-	 */
-	public function find(mixed $id);
-	
-	/**
-	 * Retrieve all the information from the model.
-	 */
-	public function all();
-	
-	/**
-	 * Retrieve all the information from the model.
-	 */
-	public function get();
-	
-	/**
-	 * Create a new entry in the model.
-	 *
-	 * @param array $data
-	 */
-	public function create(array $data);
-	
-	/**
-	 * @param $id
-	 * @param array $data
-	 * @return mixed
-	 */
-	public function update($id, array $data);
-	
-	/**
-	 * Delete an information from the model.
-	 */
-	public function delete(mixed $id);
-	
-	/**
-	 * @param array $relationships
-	 * @param array $where
-	 */
-	public function getWithRelationships(
-		array $relationships = [],
-		array $where = []
-	): mixed;
-	
-	public function withPagination();
-	
-	public function first();
-	
-	public function filterOne(array $filter);
-	
-	public function filter(array|Request $filter);
-	
-	public function validate(): bool;
+    public function __construct();
+
+    /**
+     * @return Collection
+     */
+    public function all(): Collection;
+
+    /**
+     * @param array|string $columns
+     * @return Builder|Collection
+     */
+    public function get(array|string $columns = ['*']): Builder|Collection;
+
+    /**
+     * @param array $filter
+     * @param array|string $columns
+     * @return \Illuminate\Database\Eloquent\Builder[]|Collection
+     */
+    public function where(array $filter = [], array|string $columns = ["*"]): Collection|Builder;
+
+    /**
+     * @param array $data
+     * @return Model|\Illuminate\Database\Eloquent\Builder
+     */
+    public function create(array $data): Model|\Illuminate\Database\Eloquent\Builder;
+
+    /**
+     * @param mixed $id
+     * @param array|string $columns
+     * @return \Illuminate\Database\Eloquent\Builder|Collection|Model|null
+     */
+    public function find(mixed $id, array|string $columns = ['*']): \Illuminate\Database\Eloquent\Builder|Collection|Model|null;
+
+    /**
+     * @param mixed $id
+     * @param array $data
+     * @return bool|int
+     */
+    public function update(mixed $id, array $data): bool|int;
+
+    /**
+     * @param mixed $id
+     * @return mixed
+     */
+    public function delete(mixed $id): mixed;
+
+    /**
+     * @param array|string $columns
+     * @return Model|static|null
+     */
+    public function first(array|string $columns = ['*']): Model|static|null;
+
+    /**
+     * @param int|Closure|null $perPage
+     * @param array|string $columns
+     * @param string $pageName
+     * @param int|null $page
+     * @return LengthAwarePaginator
+     * @throws InvalidArgumentException
+     */
+    public function paginate(int|Closure|null $perPage = null, array|string $columns = ['*'], string $pageName = 'page', ?int $page = null): LengthAwarePaginator;
+
+    /**
+     * @param mixed $id
+     * @param array $relationships
+     * @return Model|Collection|\Illuminate\Database\Eloquent\Builder|array|null
+     */
+    public function findWithRelationship(mixed $id, array $relationships = []): Model|Collection|\Illuminate\Database\Eloquent\Builder|array|null;
 }
