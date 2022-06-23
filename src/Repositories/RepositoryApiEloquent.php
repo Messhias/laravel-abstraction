@@ -10,16 +10,10 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 use Messhias\LaravelAbstraction\Interfaces\RepositoryAPIEloquent as RepositoryAPIEloquentInterface;
 
 abstract class RepositoryApiEloquent implements RepositoryAPIEloquentInterface
 {
-    /**
-     * @var int
-     */
-    protected static int $responseCode = 200;
-
     /**
      * @var int
      */
@@ -29,18 +23,20 @@ abstract class RepositoryApiEloquent implements RepositoryAPIEloquentInterface
      * @var int
      */
     public static int $bodyCode = 200;
+    /**
+     * @var int
+     */
+    protected static int $responseCode = 200;
 
     /**
      * @var Model
      */
     protected Model $model;
 
-    abstract protected function model(): string;
-
     /**
      * @var string
      */
-    protected static string $responseMessage = "Operation completed successfully.";
+    protected static string $responseMessage = 'Operation completed successfully.';
 
     /**
      * @throws Exception
@@ -151,7 +147,7 @@ abstract class RepositoryApiEloquent implements RepositoryAPIEloquentInterface
     /**
      * @inheritdoc
      */
-    public function where(array $filter = [], array|string $columns = ["*"]): Builder|Collection
+    public function where(array $filter = [], array|string $columns = ['*']): Builder|Collection
     {
         self::setResponseCode(200);
         return $this->getModel()::query()->where($filter)->get();
@@ -193,6 +189,7 @@ abstract class RepositoryApiEloquent implements RepositoryAPIEloquentInterface
 
     /**
      * @param mixed $id
+     *
      * @return mixed
      */
     public function delete(mixed $id): mixed
@@ -232,9 +229,10 @@ abstract class RepositoryApiEloquent implements RepositoryAPIEloquentInterface
      * @param string|Closure|null $callback
      * @param array $where
      * @param bool $paginate
+     *
      * @return LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|Collection
      */
-    public function getWithRelationships(array $relationships = [], string|Closure|null  $callback = null, array $where = [], bool $paginate = false): Collection|LengthAwarePaginator|array
+    public function getWithRelationships(array $relationships = [], string|Closure|null $callback = null, array $where = [], bool $paginate = false): Collection|LengthAwarePaginator|array
     {
         $model = $this->getModel();
 
@@ -268,6 +266,8 @@ abstract class RepositoryApiEloquent implements RepositoryAPIEloquentInterface
 
         return $this->getModel()::query()->with($relationships)->find($id);
     }
+
+    abstract protected function model(): string;
 
     /**
      * @return Model

@@ -28,6 +28,7 @@ interface RepositoryAPIEloquent
 
     /**
      * @param array|string $columns
+     *
      * @return Builder|Collection
      */
     public function get(array|string $columns = ['*']): Builder|Collection;
@@ -35,12 +36,14 @@ interface RepositoryAPIEloquent
     /**
      * @param array $filter
      * @param array|string $columns
+     *
      * @return \Illuminate\Database\Eloquent\Builder[]|Collection
      */
-    public function where(array $filter = [], array|string $columns = ["*"]): Collection|Builder;
+    public function where(array $filter = [], array|string $columns = ['*']): Collection|Builder;
 
     /**
      * @param array $data
+     *
      * @return Model|\Illuminate\Database\Eloquent\Builder
      */
     public function create(array $data): Model|\Illuminate\Database\Eloquent\Builder;
@@ -48,6 +51,7 @@ interface RepositoryAPIEloquent
     /**
      * @param mixed $id
      * @param array|string $columns
+     *
      * @return \Illuminate\Database\Eloquent\Builder|Collection|Model|null
      */
     public function find(mixed $id, array|string $columns = ['*']): \Illuminate\Database\Eloquent\Builder|Collection|Model|null;
@@ -55,18 +59,21 @@ interface RepositoryAPIEloquent
     /**
      * @param mixed $id
      * @param array $data
+     *
      * @return bool|int
      */
     public function update(mixed $id, array $data): bool|int;
 
     /**
      * @param mixed $id
+     *
      * @return mixed
      */
     public function delete(mixed $id): mixed;
 
     /**
      * @param array|string $columns
+     *
      * @return Model|static|null
      */
     public function first(array|string $columns = ['*']): Model|static|null;
@@ -76,7 +83,9 @@ interface RepositoryAPIEloquent
      * @param array|string $columns
      * @param string $pageName
      * @param int|null $page
+     *
      * @return LengthAwarePaginator
+     *
      * @throws InvalidArgumentException
      */
     public function paginate(int|Closure|null $perPage = null, array|string $columns = ['*'], string $pageName = 'page', ?int $page = null): LengthAwarePaginator;
@@ -84,6 +93,7 @@ interface RepositoryAPIEloquent
     /**
      * @param mixed $id
      * @param array $relationships
+     *
      * @return Model|Collection|\Illuminate\Database\Eloquent\Builder|array|null
      */
     public function findWithRelationship(mixed $id, array $relationships = []): Model|Collection|\Illuminate\Database\Eloquent\Builder|array|null;
