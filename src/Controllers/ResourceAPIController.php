@@ -51,7 +51,7 @@ abstract class ResourceAPIController extends ResourceAPIBaseController implement
 				$this->repository->find($id),
 			);
 		} catch (Exception $exception) {
-			return $this->logError($exception, 'Something went wrong', );
+			return $this->logError($exception, 'Something went wrong');
 		}
 	}
 	
