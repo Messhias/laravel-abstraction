@@ -12,12 +12,9 @@ namespace Messhias\LaravelAbstraction\Interfaces;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Messhias\LaravelAbstraction\Repositories\RepositoryApiEloquent;
 
 interface ResourceAPIController
 {
-    public function __construct(RepositoryApiEloquent $repository);
-
     /**
      * Create new entity based on repository abstraction.
      */
